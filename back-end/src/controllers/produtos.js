@@ -11,7 +11,7 @@ controller.create = async function(req, res) {
     ("req")
   */
   try {
-    await prisma.fornecedor.create({ data: req.body })
+    await prisma.produto.create({ data: req.body })
 
     // Envia um código de sucesso ao front-end
     // HTTP 201: Created
@@ -29,12 +29,13 @@ controller.create = async function(req, res) {
 
 controller.retrieveAll = async function(req, res) {
   try {
+
     const include = includeRelations(req.query)
 
-    // Manda buscar todas os fornecedores cadastradas no BD
-    const result = await prisma.fornecedor.findMany({
+    // Manda buscar todas os produtos cadastradas no BD
+    const result = await prisma.produto.findMany({
       include,
-      orderBy: [ { nome_fantasia: 'asc' }]  // Ordem ASCendente
+      orderBy: [ { nome: 'asc' }]  // Ordem ASCendente
     })
 
     // Retorna os dados obtidos ao cliente com o status
@@ -53,12 +54,13 @@ controller.retrieveAll = async function(req, res) {
 
 controller.retrieveOne = async function(req, res) {
   try {
+
     const include = includeRelations(req.query)
 
     // Manda recuperar o documento no servidor de BD
     // usando como critério um id informado no parâmetro
     // da requisição
-    const result = await prisma.fornecedor.findUnique({
+    const result = await prisma.produto.findUnique({
       include,
       where: { id: req.params.id }
     })
@@ -82,7 +84,7 @@ controller.update = async function(req, res) {
   try {
     // Busca o documento passado como parâmetro e, caso o documento seja
     // encontrado, atualiza-o com as informações contidas em req.body
-    await prisma.fornecedor.update({
+    await prisma.produto.update({
       where: { id: req.params.id },
       data: req.body
     })
@@ -111,7 +113,7 @@ controller.delete = async function(req, res) {
   try {
     // Busca o documento pelo id passado como parâmetro
     // e efetua a exclusão, caso o documento seja encontrado
-    await prisma.fornecedor.delete({
+    await prisma.produto.delete({
       where: { id: req.params.id }
     })
 
