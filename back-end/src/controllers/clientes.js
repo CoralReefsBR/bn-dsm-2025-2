@@ -111,6 +111,11 @@ controller.update = async function(req, res) {
 
 controller.delete = async function(req, res) {
   try {
+    // Primeiro, deleta todos os pedidos associados a este cliente
+    await prisma.pedido.deleteMany({
+      where: { cliente_id: req.params.id }
+    })
+
     // Busca o documento pelo id passado como parâmetro
     // e efetua a exclusão, caso o documento seja encontrado
     await prisma.cliente.delete({
